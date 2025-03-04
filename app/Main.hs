@@ -1,6 +1,6 @@
 module Main where
 
-import Expr (Expr (..), z, q, rq, Number (Z), powIntegral)
+import Expr (Expr (..), z, q, rq, Number (Z))
 
 derive :: Expr -> Expr
 derive (Constant _) = Constant 0
@@ -26,7 +26,7 @@ reduce (Pow base exp) =
     case (reduce base, reduce exp) of 
         (_, Constant 0) -> Constant 1
         -- we only evaluate it if its a rational
-        (Constant base, Constant (Z exp)) -> Constant $ base ^ exp
+        (Constant base, Constant (Z exp)) -> if exp < 0 then Constant . recip $ base ^ abs exp else Constant $ base ^ exp
         (base, Constant 1) -> base 
         (base, exp) -> base `Pow` exp
 reduce (Mult lhs rhs) = 
@@ -65,3 +65,5 @@ main = do
         putStrLn ("original expression: " ++ show expr)
         putStrLn ("derivative: " ++ (show . derive) expr)
         putStrLn ("reduced derivative: " ++ (show . reduce . derive) expr)
+
+    putStrLn ("expr: " ++ (show . reduce) (Constant 2 `Pow` Constant (-2)))

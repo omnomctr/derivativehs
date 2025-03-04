@@ -1,5 +1,5 @@
 {-# Language InstanceSigs #-}
-module Expr (Expr (..), Number (..), z, q, rq, powIntegral) where
+module Expr (Expr (..), Number (..), z, q, rq) where
 import qualified Data.Ratio (denominator, numerator)
 
 data Expr
