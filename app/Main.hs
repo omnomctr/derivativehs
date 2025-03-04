@@ -26,7 +26,7 @@ reduce (Pow base exp) =
     case (reduce base, reduce exp) of 
         (_, Constant 0) -> Constant 1
         -- we only evaluate it if its a rational
-        (Constant base, Constant (Z exp)) -> Constant $ base `powIntegral` exp
+        (Constant base, Constant (Z exp)) -> Constant $ base ^ exp
         (base, Constant 1) -> base 
         (base, exp) -> base `Pow` exp
 reduce (Mult lhs rhs) = 

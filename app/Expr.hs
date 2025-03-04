@@ -33,7 +33,8 @@ z = Z
 
 q :: Int -> Int -> Number 
 q numerator 1 = z numerator
-q numerator denominator = if denominator' == 1 then z numerator' else Q numerator' denominator'
+q numerator denominator = 
+    if denominator' == 1 then z numerator' else Q numerator' denominator'
     where commonFactors = gcd numerator denominator
           numerator' = numerator `quot` commonFactors
           denominator' = denominator `quot` commonFactors
@@ -117,9 +118,3 @@ instance Show Number where
     show (Z n) = show n 
     show (Q num denom) = show num ++ "/" ++ show denom 
     show (RQ n) = show n
-
-powIntegral :: Number -> Int -> Number 
-powIntegral _ 0 = z 1
-powIntegral base exp 
-    | exp < 0 = recip $ powIntegral base (abs exp)
-    | otherwise = base * powIntegral base (exp - 1)
